@@ -1,0 +1,51 @@
+tasks:
+  - type: http # required
+    name: load_data # required
+    method: GET # required
+    url: env!(SERVICE_PATH)/load # required
+    headers: # optional, default is empty
+      X-Api-Key:
+        type: string
+        value: env!(YOUR_OWN_SERVICE_KEY)
+      X-Custom-Key:
+        type: string
+        value: "My Custom Key"
+      X-Last-Execute-Time:
+        type: source
+        source: last_execute_time
+      X-Execute-Time:
+        type: source
+        source: execute_time
+    success_status_codes: # optional, default is 200
+      - 200
+    body: # optional
+      application/json:
+        type: object
+        properties:
+          field1:
+            type: string
+            value: hello
+          field2:
+            type: object
+            properties:
+              field1_1:
+                type: integer
+                value: 100
+          field3:
+            type: array
+            items:
+              - type: object
+                properties:
+                  field1:
+                    type: boolean
+                    value: false
+              - type: boolean
+                value: TRUE
+          field4:
+            type: null
+          last_execute_time:
+            type: source
+            source: last_execute_time # this add string field with date in RFC3339
+          execute_time:
+            type: source
+            source: execute_time # this add string field with date in RFC3339
