@@ -59,7 +59,7 @@ impl EnvReplacer {
 
                 let value = s.replace(old.as_str(), new);
 
-                Ok(Value::String(value))
+                self.replace_string(value)
             }
             None => return Ok(Value::String(s)),
         }
@@ -140,6 +140,11 @@ mod tests {
             &replacer,
             r#"test: ["env!(TOKEN)", "env!(URL)/load"]"#,
             "test:\n- example_token\n- http://localhost:3030/load\n",
+        );
+        env_replacer_success(
+            &replacer,
+            r#"test: ["env!(URL)/env!(TOKEN)/", "env!(URL)/load"]"#,
+            "test:\n- http://localhost:3030/example_token/\n- http://localhost:3030/load\n",
         );
         env_replacer_failure(
             &replacer,

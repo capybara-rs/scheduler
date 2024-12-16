@@ -19,7 +19,7 @@ tasks:
     success_status_codes: # optional, default is 200
       - 200
     body: # optional
-      application/json:
+      json:
         type: object
         properties:
           field1:
@@ -42,7 +42,7 @@ tasks:
               - type: boolean
                 value: TRUE
           field4:
-            type: null
+            type: "null"
           last_execute_time:
             type: source
             source: last_execute_time # this add string field with date in RFC3339
